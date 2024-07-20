@@ -1,0 +1,38 @@
+#include<iostream>
+#include<math.h>
+#include<stack>
+using namespace std;
+
+int cal(int v1, int v2, char op){
+    if(op=='^') return pow(v1, v2);
+    else if(op=='*') return v1*v2;
+    else if(op=='+') return v1+v2;
+    else if(op=='/') return v1/v2;
+    else if(op=='-') return v1-v2;
+    else if(op=='%') return v1%v2;
+}
+
+int eval(string &str){
+    stack<int> st;
+    for(int i=0; i<str.size(); i++){
+        char curr = str[i];
+        if(isdigit(curr)){
+            st.push(curr-'0');
+        } else {
+            int v2 = st.top();
+            st.pop();
+            int v1 = st.top();
+            st.pop();
+            st.push(cal(v1, v2,curr));
+        }
+    }
+    return st.top();
+    
+} 
+
+int main() {
+    string str = "532-/";
+    cout<<eval(str)<<endl;
+
+    return 0;
+}
